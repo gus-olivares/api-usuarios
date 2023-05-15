@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  usuarios-api:
+    build: .
+    ports:
+      - "3001:3001"
+    links:
+      - usuarios-mongo
+    networks:
+      - red-usuarios
+  usuarios-mongo:
+    image: gusolivares/mongo-usuarios:1.0
+    restart: always
+    hostname: host-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gus
+      MONGO_INITDB_ROOT_PASSWORD: clavesecreta
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - red-usuarios
+volumes:
+  mongo-data: 
+networks:
+  red-usuarios: 
